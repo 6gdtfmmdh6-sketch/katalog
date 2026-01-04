@@ -1,12 +1,10 @@
 <!DOCTYPE html>
+
 <html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>buchkatalog & kachel-generator</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
+    <title>buchkatalog</title>
     <style>
         * {
             margin: 0;
@@ -14,489 +12,347 @@
             box-sizing: border-box;
         }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: #f5f5f5;
-            padding: 20px;
-            line-height: 1.6;
-        }
+```
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        background: #f5f5f5;
+        padding: 20px;
+    }
+    
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        background: white;
+        border-radius: 12px;
+        padding: 30px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    
+    h1 {
+        margin-bottom: 30px;
+        color: #333;
+    }
+    
+    .form-section {
+        margin-bottom: 40px;
+        padding-bottom: 30px;
+        border-bottom: 2px solid #eee;
+    }
+    
+    .input-group {
+        margin-bottom: 20px;
+    }
+    
+    label {
+        display: block;
+        margin-bottom: 8px;
+        color: #666;
+        font-weight: 500;
+    }
+    
+    input, textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 16px;
+        font-family: inherit;
+    }
+    
+    textarea {
+        min-height: 120px;
+        resize: vertical;
+    }
+    
+    button {
+        background: #007AFF;
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 6px;
+        font-size: 16px;
+        cursor: pointer;
+        margin-right: 10px;
+    }
+    
+    button:hover {
+        background: #0056b3;
+    }
+    
+    button.secondary {
+        background: #6c757d;
+    }
+    
+    button.secondary:hover {
+        background: #5a6268;
+    }
+    
+    button.delete {
+        background: #dc3545;
+    }
+    
+    button.delete:hover {
+        background: #c82333;
+    }
+    
+    .entry {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 15px;
+        position: relative;
+    }
+    
+    .entry h3 {
+        color: #333;
+        margin-bottom: 8px;
+    }
+    
+    .entry p {
+        color: #666;
+        margin-bottom: 8px;
+    }
+    
+    .entry-actions {
+        margin-top: 15px;
+    }
+    
+    .entry-actions button {
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+    
+    #canvas {
+        display: none;
+    }
+    
+    .preview {
+        margin-top: 20px;
+    }
+    
+    .preview img {
+        max-width: 400px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+</style>
+```
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            padding: 30px;
-        }
-
-        h1 {
-            margin-bottom: 30px;
-            color: #333;
-        }
-
-        .section {
-            margin-bottom: 40px;
-        }
-
-        .section h2 {
-            margin-bottom: 15px;
-            color: #555;
-            font-size: 1.3em;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: 500;
-            color: #666;
-        }
-
-        input, textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 14px;
-            font-family: inherit;
-        }
-
-        textarea {
-            resize: vertical;
-            min-height: 80px;
-        }
-
-        button {
-            background: #007bff;
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 500;
-            transition: background 0.2s;
-        }
-
-        button:hover {
-            background: #0056b3;
-        }
-
-        button.secondary {
-            background: #6c757d;
-        }
-
-        button.secondary:hover {
-            background: #545b62;
-        }
-
-        button.danger {
-            background: #dc3545;
-        }
-
-        button.danger:hover {
-            background: #c82333;
-        }
-
-        .book-list {
-            list-style: none;
-        }
-
-        .book-item {
-            background: #f9f9f9;
-            padding: 15px;
-            margin-bottom: 10px;
-            border-radius: 4px;
-            border-left: 4px solid #007bff;
-        }
-
-        .book-item h3 {
-            color: #333;
-            margin-bottom: 5px;
-        }
-
-        .book-item .author {
-            color: #666;
-            font-style: italic;
-            margin-bottom: 5px;
-        }
-
-        .book-item .thoughts {
-            color: #888;
-            font-size: 0.9em;
-            margin: 8px 0;
-            font-style: italic;
-        }
-
-        .book-item .actions {
-            margin-top: 10px;
-        }
-
-        .book-item button {
-            padding: 6px 12px;
-            font-size: 12px;
-            margin-right: 8px;
-        }
-
-        .search-box {
-            margin-bottom: 20px;
-        }
-
-        .canvas-container {
-            display: flex;
-            gap: 20px;
-            margin-top: 20px;
-            flex-wrap: wrap;
-        }
-
-        .canvas-wrapper {
-            text-align: center;
-        }
-
-        canvas {
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            max-width: 100%;
-            height: auto;
-        }
-
-        .canvas-wrapper button {
-            margin-top: 10px;
-        }
-
-        .color-preview {
-            display: inline-block;
-            width: 30px;
-            height: 30px;
-            border-radius: 4px;
-            border: 1px solid #ddd;
-            vertical-align: middle;
-            margin-left: 10px;
-        }
-
-        .utility-buttons {
-            margin-top: 20px;
-        }
-
-        .utility-buttons button {
-            margin-right: 10px;
-        }
-
-        .empty-state {
-            text-align: center;
-            color: #999;
-            padding: 40px;
-        }
-    </style>
 </head>
 <body>
     <div class="container">
-        <h1>buchkatalog & kachel-generator</h1>
+        <h1>buchkatalog</h1>
 
-        <!-- Neues Buch hinzufügen -->
-        <div class="section">
-            <h2>neues buch hinzufügen</h2>
-            <div class="form-group">
-                <label for="autor">autor*in</label>
-                <input type="text" id="autor" placeholder="z.b. christa wolf">
-            </div>
-            <div class="form-group">
-                <label for="titel">titel</label>
-                <input type="text" id="titel" placeholder="z.b. nachdenken über christa t.">
-            </div>
-            <div class="form-group">
-                <label for="gedanken">gedanken / notizen (für kachel 2)</label>
-                <textarea id="gedanken" placeholder="deine gedanken zum buch..."></textarea>
-            </div>
-            <button onclick="addBook()">buch hinzufügen</button>
+```
+    <div class="form-section">
+        <h2 id="formTitle">neues buch hinzufügen</h2>
+        <div class="input-group">
+            <label>autor</label>
+            <input type="text" id="autor" placeholder="z.b. christa wolf">
         </div>
-
-        <!-- Bibliothek -->
-        <div class="section">
-            <h2>meine bibliothek</h2>
-            <div class="search-box">
-                <input type="text" id="search" placeholder="suche nach autor oder titel..." oninput="renderBooks()">
-            </div>
-            <ul class="book-list" id="bookList"></ul>
+        
+        <div class="input-group">
+            <label>titel</label>
+            <input type="text" id="titel" placeholder="z.b. kassandra">
         </div>
-
-        <!-- Kachel-Vorschau -->
-        <div class="section" id="previewSection" style="display: none;">
-            <h2>kachel-vorschau</h2>
-            <div class="canvas-container" id="canvasContainer"></div>
+        
+        <div class="input-group">
+            <label>gedanken</label>
+            <textarea id="gedanken" placeholder="deine gedanken zum buch..."></textarea>
         </div>
-
-        <!-- Utility Buttons -->
-        <div class="section utility-buttons">
-            <button class="secondary" onclick="exportData()">daten exportieren (json)</button>
-            <button class="secondary" onclick="importData()">daten importieren (json)</button>
-            <button class="danger" onclick="clearAllData()">alle daten löschen</button>
-        </div>
+        
+        <button onclick="saveEntry()">speichern</button>
+        <button class="secondary" onclick="cancelEdit()" id="cancelBtn" style="display: none;">abbrechen</button>
     </div>
+    
+    <div>
+        <h2>meine bücher</h2>
+        <div id="bookList"></div>
+    </div>
+</div>
 
-    <script>
-        // LocalStorage Key
-        const STORAGE_KEY = 'buchkatalog_data';
+<canvas id="canvas"></canvas>
 
-        // Daten laden
-        function loadBooks() {
-            const data = localStorage.getItem(STORAGE_KEY);
-            return data ? JSON.parse(data) : [];
+<script>
+    let books = JSON.parse(localStorage.getItem('books') || '[]');
+    let editingIndex = null;
+    
+    function stringToColor(str) {
+        let hash = 0;
+        for (let i = 0; i < str.length; i++) {
+            hash = str.charCodeAt(i) + ((hash << 5) - hash);
         }
-
-        // Daten speichern
-        function saveBooks(books) {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(books));
+        const hue = Math.abs(hash % 360);
+        return `hsl(${hue}, 45%, 75%)`;
+    }
+    
+    function saveEntry() {
+        const autor = document.getElementById('autor').value.trim();
+        const titel = document.getElementById('titel').value.trim();
+        const gedanken = document.getElementById('gedanken').value.trim();
+        
+        if (!autor || !titel) {
+            alert('bitte autor und titel eingeben');
+            return;
         }
-
-        // Farbe aus Autorennamen generieren
-        function autorZuFarbe(autor) {
-            // Einfacher Hash-Algorithmus
-            let hash = 0;
-            const normalized = autor.toLowerCase().trim();
-            for (let i = 0; i < normalized.length; i++) {
-                hash = normalized.charCodeAt(i) + ((hash << 5) - hash);
-            }
-            
-            // Hue aus Hash (0-360°)
-            const hue = Math.abs(hash) % 360;
-            
-            // Gedämpfte Sättigung und helle Helligkeit für Lesbarkeit
-            const sat = 45;
-            const light = 75;
-            
-            return `hsl(${hue}, ${sat}%, ${light}%)`;
+        
+        const entry = { autor, titel, gedanken };
+        
+        if (editingIndex !== null) {
+            books[editingIndex] = entry;
+            editingIndex = null;
+            document.getElementById('formTitle').textContent = 'neues buch hinzufügen';
+            document.getElementById('cancelBtn').style.display = 'none';
+        } else {
+            books.push(entry);
         }
-
-        // Neues Buch hinzufügen
-        function addBook() {
-            const autor = document.getElementById('autor').value.trim();
-            const titel = document.getElementById('titel').value.trim();
-            const gedanken = document.getElementById('gedanken').value.trim();
-
-            if (!autor || !titel) {
-                alert('bitte autor und titel eingeben!');
-                return;
-            }
-
-            const books = loadBooks();
-            books.push({
-                id: Date.now(),
-                autor,
-                titel,
-                gedanken,
-                datum: new Date().toISOString()
-            });
-
-            saveBooks(books);
-
-            // Formular leeren
-            document.getElementById('autor').value = '';
-            document.getElementById('titel').value = '';
-            document.getElementById('gedanken').value = '';
-
-            renderBooks();
-        }
-
-        // Buch löschen
-        function deleteBook(id) {
-            if (!confirm('buch wirklich löschen?')) return;
-
-            const books = loadBooks();
-            const filtered = books.filter(b => b.id !== id);
-            saveBooks(filtered);
-            renderBooks();
-        }
-
-        // Bücher anzeigen
-        function renderBooks() {
-            const books = loadBooks();
-            const searchTerm = document.getElementById('search').value.toLowerCase();
-            const filtered = books.filter(b => 
-                b.autor.toLowerCase().includes(searchTerm) || 
-                b.titel.toLowerCase().includes(searchTerm)
-            );
-
-            const listEl = document.getElementById('bookList');
-            
-            if (filtered.length === 0) {
-                listEl.innerHTML = '<div class="empty-state">noch keine bücher im katalog</div>';
-                return;
-            }
-
-            listEl.innerHTML = filtered.map(book => `
-                <li class="book-item">
-                    <h3>${book.titel}</h3>
-                    <div class="author">${book.autor}</div>
-                    ${book.gedanken ? `<div class="thoughts">"${book.gedanken.substring(0, 100)}${book.gedanken.length > 100 ? '...' : ''}"</div>` : ''}
-                    <div class="actions">
-                        <button onclick="generateTiles(${book.id})">kacheln generieren</button>
-                        <button class="danger" onclick="deleteBook(${book.id})">löschen</button>
-                    </div>
-                </li>
-            `).join('');
-        }
-
-        // Kacheln generieren
-        function generateTiles(bookId) {
-            const books = loadBooks();
-            const book = books.find(b => b.id === bookId);
-            if (!book) return;
-
-            const container = document.getElementById('canvasContainer');
-            container.innerHTML = '';
-
-            const color = autorZuFarbe(book.autor);
-
-            // Kachel 1: Autor + Titel
-            createTile(container, book.autor, book.titel, color, 1);
-
-            // Kachel 2: Gedanken (falls vorhanden)
-            if (book.gedanken) {
-                createTile(container, book.autor, book.gedanken, color, 2);
-            }
-
-            document.getElementById('previewSection').style.display = 'block';
-            document.getElementById('previewSection').scrollIntoView({ behavior: 'smooth' });
-        }
-
-        // Einzelne Kachel erstellen
-        function createTile(container, autor, text, color, tileNumber) {
-            const wrapper = document.createElement('div');
-            wrapper.className = 'canvas-wrapper';
-
-            const canvas = document.createElement('canvas');
-            const size = 1080; // Instagram 1:1
-            canvas.width = size;
-            canvas.height = size;
-
-            const ctx = canvas.getContext('2d');
-
-            // Hintergrund
-            ctx.fillStyle = color;
-            ctx.fillRect(0, 0, size, size);
-
-            // Text-Styling
-            ctx.fillStyle = '#1a1a1a';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-
-            const padding = 80;
-            const maxWidth = size - (padding * 2);
-
-            if (tileNumber === 1) {
-                // Kachel 1: Autor oben (Helvetica Neue), Titel unten (EB Garamond)
-                ctx.font = '500 48px "Helvetica Neue", Helvetica, Arial, sans-serif';
-                wrapText(ctx, autor.toLowerCase(), size / 2, size / 3, maxWidth, 60);
-
-                ctx.font = '400 64px "EB Garamond", Georgia, serif';
-                wrapText(ctx, text.toLowerCase(), size / 2, size / 2 + 80, maxWidth, 80);
-            } else {
-                // Kachel 2: Autor klein oben (Helvetica Neue), Gedanken zentriert (EB Garamond)
-                ctx.font = '400 32px "Helvetica Neue", Helvetica, Arial, sans-serif';
-                ctx.fillText(autor.toLowerCase(), size / 2, 120);
-
-                ctx.font = '400 42px "EB Garamond", Georgia, serif';
-                wrapText(ctx, text.toLowerCase(), size / 2, size / 2, maxWidth, 56);
-            }
-
-            wrapper.appendChild(canvas);
-
-            const downloadBtn = document.createElement('button');
-            downloadBtn.textContent = `kachel ${tileNumber} herunterladen`;
-            downloadBtn.onclick = () => downloadCanvas(canvas, `${autor}_${tileNumber}.png`);
-            wrapper.appendChild(downloadBtn);
-
-            container.appendChild(wrapper);
-        }
-
-        // Text umbrechen
-        function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
-            const words = text.split(' ');
-            let line = '';
-            const lines = [];
-
-            for (let i = 0; i < words.length; i++) {
-                const testLine = line + words[i] + ' ';
-                const metrics = ctx.measureText(testLine);
-                
-                if (metrics.width > maxWidth && i > 0) {
-                    lines.push(line);
-                    line = words[i] + ' ';
-                } else {
-                    line = testLine;
-                }
-            }
-            lines.push(line);
-
-            // Zentriert ausgeben
-            const totalHeight = lines.length * lineHeight;
-            let startY = y - (totalHeight / 2);
-
-            lines.forEach((line, index) => {
-                ctx.fillText(line.trim(), x, startY + (index * lineHeight));
-            });
-        }
-
-        // Canvas als Bild herunterladen
-        function downloadCanvas(canvas, filename) {
-            const link = document.createElement('a');
-            link.download = filename;
-            link.href = canvas.toDataURL('image/png');
-            link.click();
-        }
-
-        // Daten exportieren
-        function exportData() {
-            const books = loadBooks();
-            const dataStr = JSON.stringify(books, null, 2);
-            const blob = new Blob([dataStr], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = `buchkatalog_${new Date().toISOString().split('T')[0]}.json`;
-            link.click();
-        }
-
-        // Daten importieren
-        function importData() {
-            const input = document.createElement('input');
-            input.type = 'file';
-            input.accept = '.json';
-            input.onchange = (e) => {
-                const file = e.target.files[0];
-                const reader = new FileReader();
-                reader.onload = (event) => {
-                    try {
-                        const data = JSON.parse(event.target.result);
-                        if (confirm(`${data.length} bücher importieren? (überschreibt bestehende daten!)`)) {
-                            saveBooks(data);
-                            renderBooks();
-                        }
-                    } catch (err) {
-                        alert('fehler beim importieren: ungültige datei');
-                    }
-                };
-                reader.readAsText(file);
-            };
-            input.click();
-        }
-
-        // Alle Daten löschen
-        function clearAllData() {
-            if (confirm('alle bücher wirklich unwiderruflich löschen?')) {
-                localStorage.removeItem(STORAGE_KEY);
-                renderBooks();
-                document.getElementById('previewSection').style.display = 'none';
-            }
-        }
-
-        // Initial rendern
+        
+        localStorage.setItem('books', JSON.stringify(books));
+        
+        document.getElementById('autor').value = '';
+        document.getElementById('titel').value = '';
+        document.getElementById('gedanken').value = '';
+        
         renderBooks();
-    </script>
+    }
+    
+    function editEntry(index) {
+        const book = books[index];
+        document.getElementById('autor').value = book.autor;
+        document.getElementById('titel').value = book.titel;
+        document.getElementById('gedanken').value = book.gedanken;
+        
+        editingIndex = index;
+        document.getElementById('formTitle').textContent = 'buch bearbeiten';
+        document.getElementById('cancelBtn').style.display = 'inline-block';
+        
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    
+    function cancelEdit() {
+        editingIndex = null;
+        document.getElementById('autor').value = '';
+        document.getElementById('titel').value = '';
+        document.getElementById('gedanken').value = '';
+        document.getElementById('formTitle').textContent = 'neues buch hinzufügen';
+        document.getElementById('cancelBtn').style.display = 'none';
+    }
+    
+    function deleteEntry(index) {
+        if (confirm('wirklich löschen?')) {
+            books.splice(index, 1);
+            localStorage.setItem('books', JSON.stringify(books));
+            renderBooks();
+        }
+    }
+    
+    function generateImage(index) {
+        const book = books[index];
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        
+        canvas.width = 1080;
+        canvas.height = 1080;
+        
+        const bgColor = stringToColor(book.autor);
+        ctx.fillStyle = bgColor;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        ctx.fillStyle = '#000';
+        ctx.textAlign = 'center';
+        
+        ctx.font = 'bold 48px -apple-system, sans-serif';
+        ctx.fillText(book.autor, canvas.width / 2, 400);
+        
+        ctx.font = '36px -apple-system, sans-serif';
+        const words = book.titel.split(' ');
+        let line = '';
+        let y = 500;
+        
+        for (let word of words) {
+            const testLine = line + word + ' ';
+            const metrics = ctx.measureText(testLine);
+            if (metrics.width > 900 && line !== '') {
+                ctx.fillText(line, canvas.width / 2, y);
+                line = word + ' ';
+                y += 50;
+            } else {
+                line = testLine;
+            }
+        }
+        ctx.fillText(line, canvas.width / 2, y);
+        
+        canvas.toBlob(blob => {
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${book.autor}_${book.titel}_kachel1.png`;
+            a.click();
+        });
+        
+        if (book.gedanken) {
+            setTimeout(() => {
+                ctx.fillStyle = bgColor;
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                ctx.fillStyle = '#000';
+                ctx.font = '32px -apple-system, sans-serif';
+                ctx.textAlign = 'left';
+                
+                const maxWidth = 900;
+                const lineHeight = 50;
+                const words = book.gedanken.split(' ');
+                let line = '';
+                let y = 300;
+                
+                for (let word of words) {
+                    const testLine = line + word + ' ';
+                    const metrics = ctx.measureText(testLine);
+                    if (metrics.width > maxWidth && line !== '') {
+                        ctx.fillText(line, 90, y);
+                        line = word + ' ';
+                        y += lineHeight;
+                    } else {
+                        line = testLine;
+                    }
+                }
+                ctx.fillText(line, 90, y);
+                
+                canvas.toBlob(blob => {
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `${book.autor}_${book.titel}_kachel2.png`;
+                    a.click();
+                });
+            }, 500);
+        }
+    }
+    
+    function renderBooks() {
+        const list = document.getElementById('bookList');
+        if (books.length === 0) {
+            list.innerHTML = '<p style="color: #999;">noch keine bücher hinzugefügt</p>';
+            return;
+        }
+        
+        list.innerHTML = books.map((book, index) => `
+            <div class="entry">
+                <h3>${book.autor}</h3>
+                <p><strong>${book.titel}</strong></p>
+                ${book.gedanken ? `<p style="font-size: 14px; color: #888;">${book.gedanken.substring(0, 100)}${book.gedanken.length > 100 ? '...' : ''}</p>` : ''}
+                <div class="entry-actions">
+                    <button onclick="generateImage(${index})">kacheln erstellen</button>
+                    <button class="secondary" onclick="editEntry(${index})">bearbeiten</button>
+                    <button class="delete" onclick="deleteEntry(${index})">löschen</button>
+                </div>
+            </div>
+        `).join('');
+    }
+    
+    renderBooks();
+</script>
+```
+
 </body>
 </html>
