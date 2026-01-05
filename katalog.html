@@ -1,15 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Katalog</title>
-    
-    <!-- Google Fonts: SF Pro Display and System Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
+    <title>buchkatalog</title>
     <style>
         * {
             margin: 0;
@@ -17,187 +11,379 @@
             box-sizing: border-box;
         }
         
-        :root {
-            /* Modern system font stack with fallbacks */
-            --font-primary: -apple-system, BlinkMacSystemFont, "Segoe UI", "SF Pro Display", Roboto, "Helvetica Neue", sans-serif;
-            --font-secondary: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-            --font-mono: "SF Mono", "Monaco", "Inconsolata", monospace;
-        }
-        
-        html {
-            font-size: 16px;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-        
         body {
-            font-family: var(--font-primary);
-            line-height: 1.6;
-            color: #333;
-            background-color: #fff;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
         }
         
-        h1, h2, h3, h4, h5, h6 {
-            font-family: var(--font-secondary);
-            font-weight: 600;
-            line-height: 1.3;
-            margin-bottom: 1rem;
-            letter-spacing: -0.5px;
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
         
         h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
+            margin-bottom: 30px;
+            color: #333;
         }
         
-        h2 {
-            font-size: 2rem;
-            font-weight: 600;
-            margin-bottom: 1.25rem;
+        .form-section {
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid #eee;
         }
         
-        h3 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
+        .input-group {
+            margin-bottom: 20px;
         }
         
-        h4 {
-            font-size: 1.25rem;
-            font-weight: 600;
-        }
-        
-        p {
-            margin-bottom: 1rem;
-            font-weight: 400;
-        }
-        
-        a {
-            color: #0066cc;
-            text-decoration: none;
-            transition: color 0.2s ease;
-        }
-        
-        a:hover {
-            color: #0052a3;
-            text-decoration: underline;
-        }
-        
-        code, pre {
-            font-family: var(--font-mono);
-            background-color: #f5f5f5;
-            border-radius: 4px;
-            font-size: 0.9rem;
-        }
-        
-        code {
-            padding: 2px 6px;
-        }
-        
-        pre {
-            padding: 1rem;
-            overflow-x: auto;
-            margin-bottom: 1rem;
-        }
-        
-        button, input, select, textarea {
-            font-family: var(--font-primary);
-            font-size: 1rem;
-        }
-        
-        /* Container and Layout */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1rem;
-        }
-        
-        header {
-            background-color: #f8f9fa;
-            padding: 2rem 0;
-            border-bottom: 1px solid #e9ecef;
-        }
-        
-        main {
-            padding: 2rem 0;
-        }
-        
-        footer {
-            background-color: #f8f9fa;
-            padding: 2rem 0;
-            margin-top: 3rem;
-            border-top: 1px solid #e9ecef;
-            text-align: center;
-            font-size: 0.9rem;
+        label {
+            display: block;
+            margin-bottom: 8px;
             color: #666;
+            font-weight: 500;
         }
         
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2rem;
-            }
-            
-            h2 {
-                font-size: 1.5rem;
-            }
-            
-            h3 {
-                font-size: 1.25rem;
-            }
-            
-            body {
-                font-size: 15px;
-            }
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            font-family: inherit;
         }
         
-        @media (max-width: 480px) {
-            h1 {
-                font-size: 1.5rem;
-            }
-            
-            h2 {
-                font-size: 1.25rem;
-            }
-            
-            h3 {
-                font-size: 1rem;
-            }
-            
-            .container {
-                padding: 0 0.75rem;
-            }
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        button {
+            background: #007AFF;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        
+        button:hover {
+            background: #0056b3;
+        }
+        
+        button.secondary {
+            background: #6c757d;
+        }
+        
+        button.secondary:hover {
+            background: #5a6268;
+        }
+        
+        button.delete {
+            background: #dc3545;
+        }
+        
+        button.delete:hover {
+            background: #c82333;
+        }
+        
+        .entry {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            position: relative;
+        }
+        
+        .entry h3 {
+            color: #333;
+            margin-bottom: 8px;
+        }
+        
+        .entry p {
+            color: #666;
+            margin-bottom: 8px;
+        }
+        
+        .entry-actions {
+            margin-top: 15px;
+        }
+        
+        .entry-actions button {
+            padding: 8px 16px;
+            font-size: 14px;
+        }
+        
+        #canvas {
+            display: none;
+        }
+        
+        .preview {
+            margin-top: 20px;
+        }
+        
+        .preview img {
+            max-width: 400px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
         }
     </style>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <h1>Katalog</h1>
-        </div>
-    </header>
-    
-    <main>
-        <div class="container">
-            <h2>Welcome to Katalog</h2>
-            <p>This is a modern, clean HTML template with professional typography using system fonts and Google Fonts.</p>
+    <div class="container">
+        <h1>buchkatalog</h1>
+        
+        <div class="form-section">
+            <h2 id="formTitle">neues buch hinzufügen</h2>
+            <div class="input-group">
+                <label>autor</label>
+                <input type="text" id="autor" placeholder="z.b. christa wolf">
+            </div>
             
-            <h3>Key Features</h3>
-            <ul>
-                <li>Modern system font stack (SF Pro Display, Segoe UI, Roboto)</li>
-                <li>Responsive design for all device sizes</li>
-                <li>Clean, semantic HTML structure</li>
-                <li>Professional typography with proper font weights and spacing</li>
-                <li>Web-optimized font rendering</li>
-            </ul>
+            <div class="input-group">
+                <label>titel</label>
+                <input type="text" id="titel" placeholder="z.b. kassandra">
+            </div>
+            
+            <div class="input-group">
+                <label>gedanken</label>
+                <textarea id="gedanken" placeholder="deine gedanken zum buch..."></textarea>
+            </div>
+            
+            <button onclick="saveEntry()">speichern</button>
+            <button class="secondary" onclick="cancelEdit()" id="cancelBtn" style="display: none;">abbrechen</button>
         </div>
-    </main>
+        
+        <div>
+            <h2>meine bücher</h2>
+            <div id="bookList"></div>
+        </div>
+    </div>
     
-    <footer>
-        <div class="container">
-            <p>&copy; 2026 Katalog. All rights reserved.</p>
-        </div>
-    </footer>
+    <canvas id="canvas"></canvas>
+    
+    <script>
+        let books = JSON.parse(localStorage.getItem('books') || '[]');
+        let editingIndex = null;
+        
+        function stringToColor(str) {
+            let hash = 0;
+            for (let i = 0; i < str.length; i++) {
+                hash = str.charCodeAt(i) + ((hash << 5) - hash);
+            }
+            const hue = Math.abs(hash % 360);
+            return `hsl(${hue}, 45%, 75%)`;
+        }
+        
+        function saveEntry() {
+            const autor = document.getElementById('autor').value.trim();
+            const titel = document.getElementById('titel').value.trim();
+            const gedanken = document.getElementById('gedanken').value.trim();
+            
+            if (!autor || !titel) {
+                alert('bitte autor und titel eingeben');
+                return;
+            }
+            
+            const entry = { autor, titel, gedanken };
+            
+            if (editingIndex !== null) {
+                books[editingIndex] = entry;
+                editingIndex = null;
+                document.getElementById('formTitle').textContent = 'neues buch hinzufügen';
+                document.getElementById('cancelBtn').style.display = 'none';
+            } else {
+                books.push(entry);
+            }
+            
+            localStorage.setItem('books', JSON.stringify(books));
+            
+            document.getElementById('autor').value = '';
+            document.getElementById('titel').value = '';
+            document.getElementById('gedanken').value = '';
+            
+            renderBooks();
+        }
+        
+        function editEntry(index) {
+            const book = books[index];
+            document.getElementById('autor').value = book.autor;
+            document.getElementById('titel').value = book.titel;
+            document.getElementById('gedanken').value = book.gedanken;
+            
+            editingIndex = index;
+            document.getElementById('formTitle').textContent = 'buch bearbeiten';
+            document.getElementById('cancelBtn').style.display = 'inline-block';
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        function cancelEdit() {
+            editingIndex = null;
+            document.getElementById('autor').value = '';
+            document.getElementById('titel').value = '';
+            document.getElementById('gedanken').value = '';
+            document.getElementById('formTitle').textContent = 'neues buch hinzufügen';
+            document.getElementById('cancelBtn').style.display = 'none';
+        }
+        
+        function deleteEntry(index) {
+            if (confirm('wirklich löschen?')) {
+                books.splice(index, 1);
+                localStorage.setItem('books', JSON.stringify(books));
+                renderBooks();
+            }
+        }
+        
+        function generateImage(index) {
+            const book = books[index];
+            const canvas = document.getElementById('canvas');
+            const ctx = canvas.getContext('2d');
+            
+            // höhere auflösung für instagram
+            canvas.width = 2160;
+            canvas.height = 2160;
+            
+            const bgColor = stringToColor(book.autor);
+            ctx.fillStyle = bgColor;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.fillStyle = '#000';
+            ctx.textAlign = 'center';
+            
+            // kachel 1: autor in helvetica, titel in minion
+            ctx.font = '700 96px Helvetica, Arial, sans-serif';
+            ctx.fillText(book.autor, canvas.width / 2, 800);
+            
+            ctx.font = '400 72px "Minion Pro", Georgia, serif';
+            const words = book.titel.split(' ');
+            let line = '';
+            let y = 1000;
+            
+            for (let word of words) {
+                const testLine = line + word + ' ';
+                const metrics = ctx.measureText(testLine);
+                if (metrics.width > 1800 && line !== '') {
+                    ctx.fillText(line, canvas.width / 2, y);
+                    line = word + ' ';
+                    y += 100;
+                } else {
+                    line = testLine;
+                }
+            }
+            ctx.fillText(line, canvas.width / 2, y);
+            
+            canvas.toBlob(blob => {
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `${book.autor}_${book.titel}_kachel1.png`;
+                a.click();
+            });
+            
+            // kachel 2: gedanken im blocksatz
+            if (book.gedanken) {
+                setTimeout(() => {
+                    ctx.fillStyle = bgColor;
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    
+                    ctx.fillStyle = '#000';
+                    ctx.font = '400 56px "Minion Pro", Georgia, serif';
+                    ctx.textAlign = 'left';
+                    
+                    const maxWidth = 1800;
+                    const lineHeight = 90;
+                    const marginX = 180;
+                    let y = 500;
+                    
+                    // blocksatz implementierung
+                    const words = book.gedanken.split(' ');
+                    let lines = [];
+                    let currentLine = [];
+                    
+                    // zeilen vorbereiten
+                    for (let word of words) {
+                        currentLine.push(word);
+                        const testLine = currentLine.join(' ');
+                        const metrics = ctx.measureText(testLine);
+                        
+                        if (metrics.width > maxWidth) {
+                            currentLine.pop();
+                            if (currentLine.length > 0) {
+                                lines.push([...currentLine]);
+                                currentLine = [word];
+                            }
+                        }
+                    }
+                    if (currentLine.length > 0) {
+                        lines.push(currentLine);
+                    }
+                    
+                    // zeilen mit blocksatz rendern (außer letzte zeile)
+                    lines.forEach((line, lineIndex) => {
+                        const isLastLine = lineIndex === lines.length - 1;
+                        const text = line.join(' ');
+                        
+                        if (!isLastLine && line.length > 1) {
+                            // blocksatz: wörter gleichmäßig verteilen
+                            const totalWidth = maxWidth;
+                            const wordsWidth = line.reduce((sum, word) => {
+                                return sum + ctx.measureText(word).width;
+                            }, 0);
+                            const spaceWidth = (totalWidth - wordsWidth) / (line.length - 1);
+                            
+                            let x = marginX;
+                            line.forEach((word, i) => {
+                                ctx.fillText(word, x, y);
+                                x += ctx.measureText(word).width + spaceWidth;
+                            });
+                        } else {
+                            // letzte zeile: linksbündig
+                            ctx.fillText(text, marginX, y);
+                        }
+                        
+                        y += lineHeight;
+                    });
+                    
+                    canvas.toBlob(blob => {
+                        const url = URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = `${book.autor}_${book.titel}_kachel2.png`;
+                        a.click();
+                    });
+                }, 500);
+            }
+        }
+        
+        function renderBooks() {
+            const list = document.getElementById('bookList');
+            if (books.length === 0) {
+                list.innerHTML = '<p style="color: #999;">noch keine bücher hinzugefügt</p>';
+                return;
+            }
+            
+            list.innerHTML = books.map((book, index) => `
+                <div class="entry">
+                    <h3>${book.autor}</h3>
+                    <p><strong>${book.titel}</strong></p>
+                    ${book.gedanken ? `<p style="font-size: 14px; color: #888;">${book.gedanken.substring(0, 100)}${book.gedanken.length > 100 ? '...' : ''}</p>` : ''}
+                    <div class="entry-actions">
+                        <button onclick="generateImage(${index})">kacheln erstellen</button>
+                        <button class="secondary" onclick="editEntry(${index})">bearbeiten</button>
+                        <button class="delete" onclick="deleteEntry(${index})">löschen</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        renderBooks();
+    </script>
 </body>
 </html>
